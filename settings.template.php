@@ -19,14 +19,14 @@ $SETTINGS = [
     // See http://medoo.in/api/new for info
     "database" => [
         "type" => "mysql",
-        "name" => "app",
+        "name" => "todaystream",
         "server" => "localhost",
-        "user" => "app",
+        "user" => "",
         "password" => "",
         "charset" => "utf8"
     ],
     // Name of the app.
-    "site_title" => "Web App Template",
+    "site_title" => "TodayStream",
     // Settings for connecting to the AccountHub server.
     "accounthub" => [
         // URL for the API endpoint
@@ -36,6 +36,21 @@ $SETTINGS = [
         // API key
         "key" => "123"
     ],
+    // API keys for data sources
+    "apikeys" => [
+        "newsapi.org" => "",
+        "darksky.net" => "",
+    ],
+    // Which data sources to use
+    "sources" => [
+        "news" => [
+            "NewsAPI",
+            "Reddit"
+        ],
+        "weather" => [
+            "DarkSky"
+        ]
+    ],
     // List of required user permissions to access this app.
     "permissions" => [
     ],
@@ -44,7 +59,7 @@ $SETTINGS = [
     // Language to use for localization. See langs folder to add a language.
     "language" => "en",
     // Shown in the footer of all the pages.
-    "footer_text" => "",
+    "footer_text" => "Data sources: <a href=\"https://newsapi.org\">NewsAPI.org</a>, <a href=\"https://reddit.com\">Reddit</a>, <a href=\"https://darksky.net\">Dark Sky</a>",
     // Also shown in the footer, but with "Copyright <current_year>" in front.
     "copyright" => "Netsyms Technologies",
     // Base URL for building links relative to the location of the app.

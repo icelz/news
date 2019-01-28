@@ -7,19 +7,24 @@
 // List of pages and metadata
 define("PAGES", [
     "home" => [
-        "title" => "Home",
+        "title" => "Overview",
         "navbar" => true,
-        "icon" => "fas fa-home"
+        "icon" => "fas fa-home",
+        "scripts" => [
+            "static/Shuffle/dist/shuffle.min.js",
+            "static/js/home.js"
+        ]
+    ],
+    "news" => [
+        "title" => "News",
+        "navbar" => true,
+        "icon" => "fas fa-newspaper",
+        "scripts" => [
+            "static/Shuffle/dist/shuffle.min.js",
+            "static/js/news.js"
+        ]
     ],
     "404" => [
         "title" => "404 error"
-    ],
-    "form" => [
-        "title" => "Form",
-        "navbar" => true,
-        "icon" => "fas fa-file-alt",
-        "scripts" => [
-            "static/js/form.js"
-        ]
     ]
 ]);

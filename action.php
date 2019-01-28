@@ -35,4 +35,8 @@ switch ($VARS['action']) {
         session_destroy();
         header('Location: index.php?logout=1');
         die("Logged out.");
+    case "thumbnail":
+        header("Content-Type: image/jpeg");
+        // TODO
+        break;
 }

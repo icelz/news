@@ -1,3 +1,6 @@
 [submodule "static/css/material-color"]
 	path = static/css/material-color
 	url = https://source.netsyms.com/Netsyms/Material-Color
+[submodule "static/Shuffle"]
+	path = static/Shuffle
+	url = https://source.netsyms.com/Mirrors/Vestride_Shuffle.git
