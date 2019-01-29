@@ -17,3 +17,5 @@ $("input[name=newscategory]").on("change", function () {
 setInterval(function () {
     window.shuffleInstance.layout();
 }, 500);
+
+window.shuffleInstance.filter("general");

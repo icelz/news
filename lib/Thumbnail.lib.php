@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+use \SKleeschulte\Base32;
+
 class Thumbnail {
 
     /**
@@ -29,7 +31,6 @@ class Thumbnail {
         $output = imagecreatetruecolor($width, $height);
         imagecopyresampled($output, $image, 0, 0, 0, 0, $width, $height, ImageSX($image), ImageSY($image));
 
-        ob_end_flush();
         ob_start();
         imagejpeg($output, null, 75);
         $imagedata = ob_get_contents();
@@ -40,21 +41,26 @@ class Thumbnail {
     }
 
     /**
-     * Encodes some data to base64.
-     * @param type $img
+     * Make a thumbnail, save it to the disk cache, and return a url relative to
+     * the app root.
+     * @param string $url
+     * @param int $width
+     * @param int,bool $height
      * @return string
      */
-    static function imgToBase64($img): string {
-        return base64_encode($img);
+    static function getThumbnailCacheURL(string $url, int $width = 150, $height = true): string {
+        $encodedfilename = Base64::encode($url);
+        $path = "cache/thumb/$encodedfilename.$width.jpg";
+
+        return $path;
     }
 
-    /**
-     * Get the base64 data: URI for a jpeg image
-     * @param type $img
-     * @return string
-     */
-    static function jpegToBase64URI($img): string {
-        return "data:image/jpeg;base64," . self::imgToBase64($img);
+    static function addThumbnailToCache(string $url, int $width = 150, $height = true) {
+        $encodedfilename = Base64::encode($url);
+        $path = "cache/thumb/$encodedfilename.$width.jpg";
+        $image = self::getThumbnailFromUrl($url, $width, $height);
+        file_put_contents(__DIR__ . "/../$path", $image);
+        return $image;
     }
 
 }

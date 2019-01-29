@@ -18,6 +18,7 @@ class NewsCategory {
     const SCIENCE = 16;
     const SPORTS = 32;
     const TECHNOLOGY = 64;
+    const SOCIAL = 128;
 
     const CATEGORIES = [
         self::BUSINESS => "Business",
@@ -26,7 +27,8 @@ class NewsCategory {
         self::HEALTH => "Health",
         self::SCIENCE => "Science",
         self::SPORTS => "Sports",
-        self::TECHNOLOGY => "Technology"
+        self::TECHNOLOGY => "Technology",
+        self::SOCIAL => "Social"
     ];
 
     public function __construct(int $category) {
@@ -61,6 +63,8 @@ class NewsCategory {
                 return "sports";
             case self::TECHNOLOGY:
                 return "technology";
+            case self::SOCIAL:
+                return "social";
             default:
                 return "";
         }
@@ -91,6 +95,9 @@ class NewsCategory {
             case "tech":
                 $cat = self::TECHNOLOGY;
                 break;
+            case "social":
+                $cat = self::SOCIAL;
+                break;
         }
         return new NewsCategory($cat);
     }
@@ -115,6 +122,8 @@ class NewsCategory {
                 return "fas fa-futbol";
             case self::TECHNOLOGY:
                 return "fas fa-laptop";
+            case self::SOCIAL:
+                return "fas fa-share-alt";
             default:
                 return "fas fa-newspaper";
         }

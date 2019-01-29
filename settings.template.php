@@ -40,6 +40,10 @@ $SETTINGS = [
     "apikeys" => [
         "newsapi.org" => "",
         "darksky.net" => "",
+        "twitter.com" => [
+            "consumer_key" => "",
+            "consumer_secret" => ""
+        ]
     ],
     // Which data sources to use
     "sources" => [
@@ -59,7 +63,7 @@ $SETTINGS = [
     // Language to use for localization. See langs folder to add a language.
     "language" => "en",
     // Shown in the footer of all the pages.
-    "footer_text" => "Data sources: <a href=\"https://newsapi.org\">NewsAPI.org</a>, <a href=\"https://reddit.com\">Reddit</a>, <a href=\"https://darksky.net\">Dark Sky</a>",
+    "footer_text" => "News sources: <a href=\"https://newsapi.org\">NewsAPI.org</a>, <a href=\"https://reddit.com\">Reddit.com</a>. Weather <a href=\"https://darksky.net/poweredby/\">powered by Dark Sky</a>.",
     // Also shown in the footer, but with "Copyright <current_year>" in front.
     "copyright" => "Netsyms Technologies",
     // Base URL for building links relative to the location of the app.

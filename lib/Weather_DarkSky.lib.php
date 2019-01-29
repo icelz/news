@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class Weather {
-    
+class Weather_DarkSky extends Weather {
+
 }

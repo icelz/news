@@ -41,7 +41,7 @@ class NewsSource_NewsAPI extends NewsSource {
             $params['category'] = $category->toString();
         }
         $items = [];
-        $json = ApiFetcher::get($url, $params, ["apiKey" => $apikey]);
+        $json = ApiFetcher::get($url, $params, ["apiKey" => $apikey], "+1 hour");
         $data = json_decode($json, TRUE);
         if ($data['status'] != "ok") {
             return [];

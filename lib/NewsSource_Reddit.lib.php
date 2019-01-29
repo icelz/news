@@ -15,13 +15,13 @@ class NewsSource_Reddit extends NewsSource {
     }
 
     function loadItems() {
-        $this->loadSubreddit("news+worldnews+UpliftingNews", new NewsCategory(NewsCategory::GENERAL));
+        $this->loadSubreddit("popular/top", new NewsCategory(NewsCategory::SOCIAL));
         //$this->loadSubreddit("technology", new NewsCategory(NewsCategory::TECHNOLOGY));
     }
 
     private function loadSubreddit(string $subreddit, NewsCategory $category) {
         $items = [];
-        $json = ApiFetcher::get("https://www.reddit.com/r/$subreddit.json", ["limit" => "50"]);
+        $json = ApiFetcher::get("https://www.reddit.com/r/$subreddit.json", ["limit" => "50", "sort" => "top", "t" => "day"]);
         $news = json_decode($json, TRUE)['data']['children'];
         foreach ($news as $d) {
             $n = $d['data'];
@@ -57,6 +57,8 @@ class NewsSource_Reddit extends NewsSource {
             if (!empty($n['domain'])) {
                 $source = $n['domain'];
             }
+
+            $source .= " via <a href=\"https://reddit.com$n[permalink]\" target=\"_BLANK\">" . $n['subreddit_name_prefixed'] . "</a>";
 
             $timestamp = time();
             if (!empty($n['created'])) {
