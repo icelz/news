@@ -51,9 +51,7 @@ $SETTINGS = [
             "NewsAPI",
             "Reddit"
         ],
-        "weather" => [
-            "DarkSky"
-        ]
+        "weather" => "DarkSky"
     ],
     // List of required user permissions to access this app.
     "permissions" => [

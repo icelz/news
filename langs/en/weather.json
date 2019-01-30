@@ -1,0 +1,6 @@
+{
+    "High: {temp}{units}": "High: {temp}{units}",
+    "Low: {temp}{units}": "Low: {temp}{units}",
+    "Temperature: {temp}{units}": "Temperature: {temp}{units}",
+    "{temp}{units}": "{temp}{units}"
+}

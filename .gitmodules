@@ -4,3 +4,6 @@
 [submodule "static/Shuffle"]
 	path = static/Shuffle
 	url = https://source.netsyms.com/Mirrors/Vestride_Shuffle.git
+[submodule "static/weather-icons"]
+	path = static/weather-icons
+	url = https://source.netsyms.com/Mirrors/erikflowers_weather-icons.git

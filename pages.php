@@ -10,6 +10,9 @@ define("PAGES", [
         "title" => "Overview",
         "navbar" => true,
         "icon" => "fas fa-home",
+        "styles" => [
+            "static/weather-icons/css/weather-icons.min.css"
+        ],
         "scripts" => [
             "static/Shuffle/dist/shuffle.min.js",
             "static/js/home.js"

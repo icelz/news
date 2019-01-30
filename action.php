@@ -7,7 +7,6 @@
 /**
  * Make things happen when buttons are pressed and forms submitted.
  */
-
 require_once __DIR__ . "/required.php";
 
 if ($VARS['action'] !== "signout") {
@@ -35,8 +34,37 @@ switch ($VARS['action']) {
         session_destroy();
         header('Location: index.php?logout=1');
         die("Logged out.");
-    case "thumbnail":
-        header("Content-Type: image/jpeg");
-        // TODO
+    case "settempunits":
+        $unit = "C";
+        if (!empty($VARS['unit'])) {
+            switch (strtoupper($VARS['unit'])) {
+                case "F":
+                    $unit = "F";
+                    break;
+                case "C":
+                    $unit = "C";
+                    break;
+                case "K":
+                    $unit = "K";
+                    break;
+            }
+        }
+        setcookie("TemperatureUnitsPref", $unit, time() + 60 * 60 * 24 * 90);
+        returnToSender("");
+        break;
+    case "setspeedunits":
+        $unit = "K";
+        if (!empty($VARS['unit'])) {
+            switch (strtoupper($VARS['unit'])) {
+                case "KPH":
+                    $unit = "KPH";
+                    break;
+                case "MPH":
+                    $unit = "MPH";
+                    break;
+            }
+        }
+        setcookie("SpeedUnitsPref", $unit, time() + 60 * 60 * 24 * 90);
+        returnToSender("");
         break;
 }
