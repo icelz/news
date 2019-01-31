@@ -8,7 +8,8 @@
 
 require_once __DIR__ . "/../required.php";
 
-$fileparts = explode(".", end(explode("/", $_GET['file'])));
+$urlparts = explode("/", $_GET['file']);
+$fileparts = explode(".", end($urlparts));
 
 if (count($fileparts) != 3 || !preg_match("/[0-9]+/", $fileparts[1]) || $fileparts[2] != "jpg") {
     http_response_code(403);
