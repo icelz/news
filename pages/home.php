@@ -77,13 +77,14 @@ foreach ($newsitems as $item) {
             <div class="card mb-2">
                 <?php if (!empty($item->getImage())) { ?>
                     <a href="<?php echo $item->getURL(); ?>" target="_BLANK">
-                        <img src="<?php
+                        <?php
                         if (strpos($item->getImage(), "preview.redd.it") !== false) {
-                            echo $item->getImage();
+                            $imgurl = $item->getImage();
                         } else {
-                            echo Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
+                            $imgurl = Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
                         }
-                        ?>" class="card-img-top" alt="">
+                        ?>
+                        <img src="<?php echo $imgurl; ?>" class="card-img-top newscard-img" alt="">
                     </a>
                 <?php } ?>
                 <div class="card-body">

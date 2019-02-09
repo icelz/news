@@ -41,7 +41,7 @@ $newsitems = News::getItems();
                         } else {
                             echo Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
                         }
-                        ?>" class="card-img-top" alt="">
+                        ?>" class="card-img-top newscard-img" alt="">
                     </a>
                 <?php } ?>
                 <div class="card-body">

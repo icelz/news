@@ -69,10 +69,10 @@ class Thumbnail {
      * @param type $height
      * @return type
      */
-    static function addThumbnailToCache(string $url, int $width = 150, $height = true) {
+    static function addThumbnailToCache(string $url, int $width = 150, $height = true, $forcesha1 = false) {
         global $database;
         $encodedfilename = Base64::encode($url);
-        if (strlen("$encodedfilename.$width.jpg") > 250) {
+        if ($forcesha1 || strlen("$encodedfilename.$width.jpg") > 250) {
             // We're too long for common filesystems
             $encodedfilename = "SHA1_" . sha1($url);
             if (!$database->has("imagecache", ["url" => $url])) {
@@ -82,6 +82,7 @@ class Thumbnail {
         $path = "cache/thumb/$encodedfilename.$width.jpg";
         $image = self::getThumbnailFromUrl($url, $width, $height);
         file_put_contents(__DIR__ . "/../$path", $image);
+        echo $path;
         return $image;
     }
 

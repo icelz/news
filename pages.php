@@ -15,6 +15,7 @@ define("PAGES", [
         ],
         "scripts" => [
             "static/Shuffle/dist/shuffle.min.js",
+            "static/js/newsgrid.js",
             "static/js/home.js"
         ]
     ],
@@ -24,6 +25,7 @@ define("PAGES", [
         "icon" => "fas fa-newspaper",
         "scripts" => [
             "static/Shuffle/dist/shuffle.min.js",
+            "static/js/newsgrid.js",
             "static/js/news.js"
         ]
     ],
