@@ -5,9 +5,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-//$weatherclass = "Weather_" . $SETTINGS['sources']['weather'];
-//$weather = new $weatherclass(46.595806, -112.027031); // TODO: get user location
-$weather = new Weather_DarkSky(46.595806, -112.027031);
+$weatherclass = "Weather_" . $SETTINGS['sources']['weather'];
+$weather = new $weatherclass(46.595, -112.027); // TODO: get user location
 $weather->loadForecast();
 
 $tempunits = "C";
