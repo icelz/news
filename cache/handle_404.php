@@ -9,6 +9,7 @@
 require_once __DIR__ . "/../required.php";
 
 header("Content-Type: text/plain;utf-8");
+header("Cache-Control: max-age=" . (60 * 60 * 24 * 7));
 
 $urlparts = explode("/", $_GET['file']);
 $fileparts = explode(".", end($urlparts));
@@ -24,9 +25,8 @@ if (!preg_match("/^[A-Za-z0-9\-!_]+$/", $fileparts[0])) {
 }
 
 if (strpos($fileparts[0], "SHA1_") === 0) {
-    $hash = str_replace("SHA1_", "", $fileparts[0]);
-    if ($database->has("imagecache", ["hash" => $hash])) {
-        $url = $database->get("imagecache", 'url', ["hash" => $hash]);
+    if ($database->has("imagecache", ["hash" => $fileparts[0]])) {
+        $url = $database->get("imagecache", 'url', ["hash" => $fileparts[0]]);
         echo $url;
     } else {
         http_response_code(404);
