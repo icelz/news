@@ -41,22 +41,44 @@ class Thumbnail {
     }
 
     /**
-     * Make a thumbnail, save it to the disk cache, and return a url relative to
-     * the app root.
+     * Return a thumbnail URL relative to the app root for the given image URL.
      * @param string $url
      * @param int $width
      * @param int,bool $height
      * @return string
      */
     static function getThumbnailCacheURL(string $url, int $width = 150, $height = true): string {
+        global $database;
         $encodedfilename = Base64::encode($url);
+        if (strlen("$encodedfilename.$width.jpg") > 250) {
+            // We're too long for common filesystems
+            $encodedfilename = "SHA1_" . sha1($url);
+            if (!$database->has("imagecache", ["url" => $url])) {
+                $database->insert("imagecache", ["url" => $url, "hash" => $encodedfilename, "created" => date("Y-m-d H:i:s")]);
+            }
+        }
         $path = "cache/thumb/$encodedfilename.$width.jpg";
 
         return $path;
     }
 
+    /**
+     * Generate a thumbnail and save it to the cache
+     * @param string $url
+     * @param int $width
+     * @param type $height
+     * @return type
+     */
     static function addThumbnailToCache(string $url, int $width = 150, $height = true) {
+        global $database;
         $encodedfilename = Base64::encode($url);
+        if (strlen("$encodedfilename.$width.jpg") > 250) {
+            // We're too long for common filesystems
+            $encodedfilename = "SHA1_" . sha1($url);
+            if (!$database->has("imagecache", ["url" => $url])) {
+                $database->insert("imagecache", ["url" => $url, "hash" => $encodedfilename, "created" => date("Y-m-d H:i:s")]);
+            }
+        }
         $path = "cache/thumb/$encodedfilename.$width.jpg";
         $image = self::getThumbnailFromUrl($url, $width, $height);
         file_put_contents(__DIR__ . "/../$path", $image);
