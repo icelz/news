@@ -29,6 +29,14 @@ define("PAGES", [
             "static/js/news.js"
         ]
     ],
+    "weather" => [
+        "title" => "Weather",
+        "navbar" => true,
+        "icon" => "fas fa-cloud",
+        "styles" => [
+            "static/weather-icons/css/weather-icons.min.css"
+        ],
+    ],
     "404" => [
         "title" => "404 error"
     ]

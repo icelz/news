@@ -33,16 +33,73 @@ foreach ($newsitems as $item) {
 
 <div class="card mb-4">
     <div class="card-body">
-        <div class="d-flex">
-            <?php
-            $currently = $weather->getCurrently();
-            ?>
-            <div class="mr-4 display-4">
-                <i class="wi wi-fw <?php echo $currently->getIcon(); ?>"></i>
+        <div class="d-flex flex-wrap justify-content-around">
+            <div class="mr-4 mb-2 text-center">
+                <?php
+                $currently = $weather->getCurrently();
+                $forecast = $weather->getForecast();
+                ?>
+                <div class="d-flex flex-wrap">
+                    <div class="mr-4 display-4">
+                        <i class="wi wi-fw <?php echo $currently->getIcon(); ?>"></i>
+                    </div>
+                    <div>
+                        <h2><?php echo $currently->summary; ?></h2>
+                        <h4><?php $Strings->build("{temp}{units}", ["temp" => round(Weather::convertDegCToUnits($currently->temperature, $tempunits), 1), "units" => " $degreesymbol$tempunits"]); ?></h4>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-weight-bold"><?php
+                        $Strings->build("Low: {tempLow}{units} High: {tempHigh}{units}", [
+                            "tempLow" => round(Weather::convertDegCToUnits($forecast[0]->tempLow, $tempunits), 1),
+                            "tempHigh" => round(Weather::convertDegCToUnits($forecast[0]->tempHigh, $tempunits), 1),
+                            "units" => " $degreesymbol$tempunits"
+                        ]);
+                        ?></p>
+                    <p>
+                        <?php
+                        echo $forecast[0]->summary;
+                        ?>
+                    </p>
+                </div>
             </div>
-            <div>
-                <h2><?php echo $currently->summary; ?></h2>
-                <h4><?php $Strings->build("{temp}{units}", ["temp" => round(Weather::convertDegCToUnits($currently->temperature, $tempunits), 1), "units" => " $degreesymbol$tempunits"]); ?></h4>
+            <div class="row">
+                <?php
+                $i = 0;
+                foreach ($forecast as $day) {
+                    if ($i == 0) {
+                        // skip the first one since it's today
+                        $i++;
+                        continue;
+                    }
+                    if ($i >= 4) {
+                        break;
+                    }
+                    $i++;
+                    ?>
+                    <div class="col-12 col-sm-4 text-center">
+                        <div class="h1">
+                            <i class="wi wi-fw <?php echo $day->getIcon(); ?>"></i>
+                        </div>
+                        <div class="h5">
+                            <?php echo date("l", $day->time); ?>
+                        </div>
+                        <p class="font-weight-bold">
+                            <?php
+                            $Strings->build("{tempLow} to {tempHigh}{units}", [
+                                "tempLow" => round(Weather::convertDegCToUnits($day->tempLow, $tempunits), 1),
+                                "tempHigh" => round(Weather::convertDegCToUnits($day->tempHigh, $tempunits), 1),
+                                "units" => " $degreesymbol$tempunits"
+                            ]);
+                            ?>
+                        </p>
+                        <p>
+                            <?php echo $day->summary; ?>
+                        </p>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </div>

@@ -41,6 +41,35 @@ class Weather_DarkSky extends Weather {
         $currently->windBearing = $resp->currently->windBearing;
 
         $this->setCurrently($currently);
+
+        foreach ($resp->daily->data as $day) {
+            $daily = new Conditions();
+
+            $daily->lat = $this->lat;
+            $daily->lng = $this->lng;
+            $daily->time = $day->time;
+
+            $daily->summary = $day->summary;
+            $daily->setDayorNight();
+
+            $daily->tempHigh = $day->temperatureMax;
+            $daily->tempLow = $day->temperatureMin;
+
+            $daily->precipProbability = $day->precipProbability;
+
+            $daily->ozone = $day->ozone;
+            $daily->dewpoint = $day->dewPoint;
+            $daily->cloudCover = $day->cloudCover;
+            $daily->humidity = $day->humidity;
+            $daily->visibility = $day->visibility;
+            $daily->uvindex = $day->uvIndex;
+
+            $daily->windSpeed = $day->windSpeed;
+            $daily->windGust = $day->windGust;
+            $daily->windBearing = $day->windBearing;
+
+            $this->conditions[] = $daily;
+        }
     }
 
 }
