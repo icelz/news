@@ -51,6 +51,7 @@ class Weather_DarkSky extends Weather {
 
             $daily->summary = $day->summary;
             $daily->setDayorNight();
+            $daily->disablenight = true;
 
             $daily->tempHigh = $day->temperatureMax;
             $daily->tempLow = $day->temperatureMin;

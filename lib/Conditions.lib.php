@@ -35,6 +35,10 @@ class Conditions {
      * @var bool True if daytime, false if nighttime.  Set with setDayOrNight().
      */
     private $daytime = true;
+    /**
+     * @var type bool If true, don't generate nighttime icon
+     */
+    public $disablenight = false;
 
     /**
      * @var float Temperature in degrees Celsius
@@ -208,7 +212,7 @@ class Conditions {
             if ($this->isOvercast()) {
                 return "wi-$downfall$wind";
             } else {
-                $daynight = $this->isDay() ? "day" : "night-alt";
+                $daynight = $this->isDay() || $this->disablenight ? "day" : "night-alt";
                 return "wi-$daynight-$downfall$wind";
             }
         }
@@ -218,14 +222,14 @@ class Conditions {
         }
 
         if ($this->isCloudy()) {
-            return $this->isDay() ? "wi-day-cloudy" : "wi-night-alt-cloudy";
+            return $this->isDay() || $this->disablenight ? "wi-day-cloudy" : "wi-night-alt-cloudy";
         }
 
         if ($this->isCold()) {
             return "wi-snowflake-cold";
         }
 
-        if ($this->isDay()) {
+        if ($this->isDay() || $this->disablenight) {
             if ($this->isHot()) {
                 return "wi-hot";
             }
