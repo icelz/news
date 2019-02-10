@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+use GeoIp2\Database\Reader;
+
 abstract class Weather {
 
     protected $conditions = [];
@@ -14,10 +16,47 @@ abstract class Weather {
     protected $high;
     protected $lat = 0.0;
     protected $lng = 0.0;
+    protected $locationname = "";
 
     public function __construct($latitude, $longitude) {
         $this->lat = $latitude;
         $this->lng = $longitude;
+    }
+
+    /**
+     * Attempt to find and set the user's location based on the client IP address.
+     * @global type $SETTINGS
+     * @return boolean true if successful, false if not
+     */
+    public function setLocationByUserIP() {
+        global $SETTINGS;
+        // Make sure we'll have a valid IP when testing on localhost
+        if ($SETTINGS['debug'] && $_SERVER['REMOTE_ADDR'] == "127.0.0.1") {
+            // This should geolocate to Helena, Montana, United States
+            $_SERVER['REMOTE_ADDR'] = "206.127.90.1";
+        }
+        try {
+            $reader = new Reader($SETTINGS['geoip_db']);
+
+            // Get the user's IP address
+            $clientip = $_SERVER['REMOTE_ADDR'];
+            // Check if we're behind CloudFlare and adjust accordingly
+            if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+                $clientip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            }
+
+            $record = $reader->city($clientip);
+
+            $country = $record->country->name;
+            $region = $record->mostSpecificSubdivision->name;
+
+            $this->locationname = $record->city->name . ", $region";
+            $this->lat = $record->location->latitude;
+            $this->lng = $record->location->longitude;
+            return true;
+        } catch (GeoIp2\Exception\AddressNotFoundException $ex) {
+            return false;
+        }
     }
 
     abstract protected function loadForecast();
@@ -30,6 +69,10 @@ abstract class Weather {
 
     public function getLongitude(): float {
         return $this->lng;
+    }
+
+    public function getLocationName(): string {
+        return $this->locationname;
     }
 
     public function getForecast(): array {
@@ -49,6 +92,10 @@ abstract class Weather {
     }
 
     // Setters
+
+    public function setLocationName(string $name) {
+        $this->locationname = $name;
+    }
 
     public function setForecast(array $conditions) {
         $this->conditions = $conditions;

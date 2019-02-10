@@ -4,3 +4,4 @@ nbproject/private
 *.sync-conflict*
 /database.mwb.bak
 /cache/thumb/*.jpg
+GeoLite2-City.mmdb

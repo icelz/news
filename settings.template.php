@@ -53,6 +53,10 @@ $SETTINGS = [
         ],
         "weather" => "DarkSky"
     ],
+    // Location of MaxMind GeoIP database
+    // Required attribution: This product includes GeoLite2 data created by
+    // MaxMind, available from http://www.maxmind.com
+    "geoip_db" => __DIR__ . "/GeoLite2-City.mmdb",
     // List of required user permissions to access this app.
     "permissions" => [
     ],

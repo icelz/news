@@ -7,6 +7,7 @@
 
 $weatherclass = "Weather_" . $SETTINGS['sources']['weather'];
 $weather = new $weatherclass(46.595, -112.027); // TODO: get user location
+$weather->setLocationByUserIP();
 $weather->loadForecast();
 
 $tempunits = "C";
@@ -24,13 +25,13 @@ if (!empty($_COOKIE['TemperatureUnitsPref']) && preg_match("/[FCK]/", $_COOKIE['
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex flex-wrap justify-content-around">
-                    <div class="mr-4 mb-2 text-center">
+                    <div class="mx-2 mb-2 text-center">
                         <?php
                         $currently = $weather->getCurrently();
                         $forecast = $weather->getForecast();
                         ?>
-                        <div class="d-flex flex-wrap">
-                            <div class="mr-4 display-4">
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div class="mx-4 display-4">
                                 <i class="wi wi-fw <?php echo $currently->getIcon(); ?>"></i>
                             </div>
                             <div>
@@ -112,7 +113,12 @@ if (!empty($_COOKIE['TemperatureUnitsPref']) && preg_match("/[FCK]/", $_COOKIE['
             </div>
 
             <div class="text-muted">
-                <i class="fas fa-map-marker-alt"></i> <?php echo round($weather->getLatitude(), 2) . ", " . round($weather->getLongitude(), 2); ?>
+                <i class="fas fa-map-marker-alt"></i> <?php
+                if (!empty($weather->getLocationName())) {
+                    echo htmlentities($weather->getLocationName()) . " | ";
+                }
+                echo round($weather->getLatitude(), 2) . ", " . round($weather->getLongitude(), 2);
+                ?>
             </div>
         </div>
     </div>
