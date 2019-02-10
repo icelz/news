@@ -58,4 +58,47 @@ class NewsItem {
         return $this->category;
     }
 
+    /**
+     * Generate a HTML card for a grid layout
+     * @return string
+     */
+    function generateGridCard(bool $lazyload = false): string {
+        $category = $this->getCategory()->toString();
+        $url = $this->getURL();
+        $headline = htmlentities($this->getHeadline());
+        $source = $this->getSource();
+        $imghtml = "";
+        if (!empty($this->getImage())) {
+            $imghtml = '<a href="' . $this->getURL() . '" target="_BLANK">';
+            if (strpos($this->getImage(), "preview.redd.it") !== false) {
+                $imgurl = $this->getImage();
+            } else {
+                $imgurl = Thumbnail::getThumbnailCacheURL($this->getImage(), 500);
+            }
+            if ($lazyload) {
+                $imghtml .= '<img src="./static/img/news-placeholder.svg" data-src="' . $imgurl . '" class="card-img-top newscard-img d-none" alt="">';
+                $imghtml .= '<noscript><img src="' . $imgurl . '" class="card-img-top newscard-img" alt=""></noscript>';
+            } else {
+                $imghtml .= '<img src="' . $imgurl . '" class="card-img-top newscard-img" alt="">';
+            }
+            $imghtml .= '</a>';
+        }
+        $html = <<<END
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 px-1 m-0 grid__brick" data-groups='["$category"]'>
+                <div class="card mb-2">
+                    $imghtml
+                    <div class="card-body">
+                        <a class="text-dark" href="$url" target="_BLANK">
+                            <h4 class="card-title">
+                                $headline
+                            </h4>
+                        </a>
+                        <p class="small">$source</p>
+                    </div>
+                </div>
+            </div>
+END;
+        return $html;
+    }
+
 }
