@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+header("Link: <static/img/news-placeholder.svg>; rel=preload; as=image", false);
+
 News::load($SETTINGS["sources"]["news"]);
 
 $newsitems = News::getItems();
@@ -39,3 +41,19 @@ $newsitems = News::getItems();
     <div class="col-1 sizer-element"></div>
 
 </div>
+
+
+<script nonce="<?php echo $SECURE_NONCE; ?>">
+    var preload_images = <?php
+    $srcs = [];
+    foreach ($newsitems as $item) {
+        if (strpos($item->getImage(), "preview.redd.it") !== false) {
+            $imgurl = $item->getImage();
+        } else {
+            $imgurl = Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
+        }
+        $srcs[$item->getCategory()->toString()][] = $imgurl;
+    }
+    echo json_encode($srcs);
+    ?>;
+</script>

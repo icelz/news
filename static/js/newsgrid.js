@@ -16,3 +16,8 @@ setInterval(function () {
 // Show the images using JavaScript, to make sure we don't see double
 // when JS is disabled
 $("img.newscard-img.d-none").removeClass("d-none");
+
+
+$("img.newscard-img").on("error", function () {
+    $(this).attr("src", "static/img/news-placeholder.svg");
+});

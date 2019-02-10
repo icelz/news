@@ -5,6 +5,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+header("Link: <static/img/news-placeholder.svg>; rel=preload; as=image", false);
+
 $weatherclass = "Weather_" . $SETTINGS['sources']['weather'];
 $weather = new $weatherclass(46.595, -112.027); // TODO: get user location
 $weather->loadForecast();
@@ -128,10 +130,26 @@ foreach ($newsitems as $item) {
             break;
         }
         $count++;
-        echo $item->generateGridCard(false);
+        echo $item->generateGridCard(true);
     }
     ?>
 
     <div class="col-1 sizer-element"></div>
 
 </div>
+
+
+<script nonce="<?php echo $SECURE_NONCE; ?>">
+    var preload_images = <?php
+    $srcs = [];
+    foreach ($itemsbycategory["general"] as $item) {
+        if (strpos($item->getImage(), "preview.redd.it") !== false) {
+            $imgurl = $item->getImage();
+        } else {
+            $imgurl = Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
+        }
+        $srcs[] = $imgurl;
+    }
+    echo json_encode($srcs);
+    ?>;
+</script>

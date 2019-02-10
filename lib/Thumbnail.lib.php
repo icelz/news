@@ -82,7 +82,7 @@ class Thumbnail {
         $path = "cache/thumb/$encodedfilename.$width.jpg";
         $image = self::getThumbnailFromUrl($url, $width, $height);
         file_put_contents(__DIR__ . "/../$path", $image);
-        echo $path;
+        
         return $image;
     }
 

@@ -19,4 +19,7 @@ $("input[name=newscategory]").on("change", function () {
 });
 
 window.shuffleInstance.filter("general");
-setTimeout(fetchVisibleGridImages, 500);
+
+$(document).ready(function () {
+    fetchVisibleGridImages();
+});
