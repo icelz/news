@@ -128,32 +128,9 @@ foreach ($newsitems as $item) {
             break;
         }
         $count++;
-        ?>
-        <div class="col-12 col-sm-6 col-md-6 col-lg-4 px-1 m-0 grid__brick" data-groups='["<?php echo $item->getCategory()->toString(); ?>"]'>
-            <div class="card mb-2">
-                <?php if (!empty($item->getImage())) { ?>
-                    <a href="<?php echo $item->getURL(); ?>" target="_BLANK">
-                        <?php
-                        if (strpos($item->getImage(), "preview.redd.it") !== false) {
-                            $imgurl = $item->getImage();
-                        } else {
-                            $imgurl = Thumbnail::getThumbnailCacheURL($item->getImage(), 500);
-                        }
-                        ?>
-                        <img src="<?php echo $imgurl; ?>" class="card-img-top newscard-img" alt="">
-                    </a>
-                <?php } ?>
-                <div class="card-body">
-                    <a class="text-dark" href="<?php echo $item->getURL(); ?>" target="_BLANK">
-                        <h4 class="card-title">
-                            <?php echo htmlentities($item->getHeadline()); ?>
-                        </h4>
-                    </a>
-                    <p class="small"><?php echo $item->getSource(); ?></p>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
+        echo $item->generateGridCard(false);
+    }
+    ?>
 
     <div class="col-1 sizer-element"></div>
 

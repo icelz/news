@@ -13,13 +13,6 @@ setInterval(function () {
     window.shuffleInstance.layout();
 }, 500);
 
-$("img.newscard-img").on("error", function () {
-    if ($(this).data("reloaded")) {
-        return;
-    }
-    var img = $(this);
-    setTimeout(function () {
-        img.attr("src", $(this).attr("src"));
-        img.data("reloaded", true);
-    }, 500);
-});
+// Show the images using JavaScript, to make sure we don't see double
+// when JS is disabled
+$("img.newscard-img.d-none").removeClass("d-none");
