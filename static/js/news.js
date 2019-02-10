@@ -14,7 +14,6 @@ function fetchVisibleGridImages() {
 
 $("input[name=newscategory]").on("change", function () {
     window.shuffleInstance.filter($(this).val());
-    $(this).button('toggle');
     setTimeout(fetchVisibleGridImages, 500);
 });
 

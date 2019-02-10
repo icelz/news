@@ -10,13 +10,13 @@ News::load($SETTINGS["sources"]["news"]);
 $newsitems = News::getItems();
 ?>
 
-<div class="btn-toolbar mb-4" role="toolbar">
-    <div class="btn-group btn-group-toggle">
+<div class="btn-toolbar mb-4 justify-content-center" role="toolbar">
+    <div class="btn-group btn-group-toggle flex-wrap justify-content-center" data-toggle="buttons">
         <?php
         foreach (NewsCategory::CATEGORIES as $cat) {
             $category = NewsCategory::fromString($cat);
             ?>
-            <label class="btn btn-secondary">
+            <label class="btn btn-secondary category-btn<?php echo $category->get() == NewsCategory::GENERAL ? " active" : ""; ?>">
                 <input
                     type="radio"
                     name="newscategory"
