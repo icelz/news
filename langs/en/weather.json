@@ -4,5 +4,6 @@
     "Temperature: {temp}{units}": "Temperature: {temp}{units}",
     "{temp}{units}": "{temp}{units}",
     "{tempLow} to {tempHigh}{units}": "{tempLow} to {tempHigh}{units}",
-    "Low: {tempLow}{units} High: {tempHigh}{units}": "Low: {tempLow}{units} | High: {tempHigh}{units}"
+    "Low: {tempLow}{units} High: {tempHigh}{units}": "Low: {tempLow}{units} | High: {tempHigh}{units}",
+    "Geolocate": "Geolocate"
 }

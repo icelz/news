@@ -8,8 +8,12 @@
 header("Link: <static/img/news-placeholder.svg>; rel=preload; as=image", false);
 
 $weatherclass = "Weather_" . $SETTINGS['sources']['weather'];
-$weather = new $weatherclass(46.595, -112.027); // TODO: get user location
-$weather->setLocationByUserIP();
+$lat = 46.595;
+$lng = -112.027;
+$weather = new $weatherclass($lat, $lng);
+if (!$weather->setLocationByCookie()) {
+    $weather->setLocationByUserIP();
+}
 $weather->loadForecast();
 
 $tempunits = "C";
@@ -112,13 +116,18 @@ foreach ($newsitems as $item) {
             <a class="px-2" href="./action.php?action=settempunits&source=home&unit=K">K</a>
         </div>
 
-        <div class="text-muted">
-            <i class="fas fa-map-marker-alt"></i> <?php
-            if (!empty($weather->getLocationName())) {
-                echo htmlentities($weather->getLocationName()) . " | ";
-            }
-            echo round($weather->getLatitude(), 2) . ", " . round($weather->getLongitude(), 2);
-            ?>
+        <div>
+            <span class="text-muted">
+                <i class="fas fa-map-marker-alt"></i> <?php
+                if (!empty($weather->getLocationName())) {
+                    echo htmlentities($weather->getLocationName()) . " | ";
+                }
+                echo round($weather->getLatitude(), 2) . ", " . round($weather->getLongitude(), 2);
+                ?>
+            </span>
+            <span id="geolocate-btn" class="btn btn-link btn-sm ml-2">
+                <i class="fas fa-compass"></i> <?php $Strings->get("Geolocate"); ?>
+            </span>
         </div>
     </div>
 </div>

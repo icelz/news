@@ -28,7 +28,7 @@ abstract class Weather {
      * @global type $SETTINGS
      * @return boolean true if successful, false if not
      */
-    public function setLocationByUserIP() {
+    public function setLocationByUserIP(): bool {
         global $SETTINGS;
         // Make sure we'll have a valid IP when testing on localhost
         if ($SETTINGS['debug'] && $_SERVER['REMOTE_ADDR'] == "127.0.0.1") {
@@ -57,6 +57,24 @@ abstract class Weather {
         } catch (GeoIp2\Exception\AddressNotFoundException $ex) {
             return false;
         }
+    }
+
+    /**
+     * Attempt to set the user's location based on sent cookies named "Latitude"
+     * and "Longitude".
+     * @return bool true if successful.
+     */
+    public function setLocationByCookie(): bool {
+        if (!empty($_COOKIE['Latitude']) && !empty($_COOKIE['Longitude'])) {
+            $latlngregex = "/-?[0-9]{1,3}(\.[0-9]+)?/";
+            if (preg_match($latlngregex, $_COOKIE['Latitude']) && preg_match($latlngregex, $_COOKIE['Longitude'])) {
+                $this->lat = $_COOKIE['Latitude'] * 1.0;
+                $this->lng = $_COOKIE['Longitude'] * 1.0;
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     abstract protected function loadForecast();

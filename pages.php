@@ -15,6 +15,7 @@ define("PAGES", [
         ],
         "scripts" => [
             "static/Shuffle/dist/shuffle.min.js",
+            "static/js/locationcookie.js",
             "static/js/newsgrid.js",
             "static/js/home.js"
         ]
@@ -36,6 +37,9 @@ define("PAGES", [
         "styles" => [
             "static/weather-icons/css/weather-icons.min.css"
         ],
+        "scripts" => [
+            "static/js/locationcookie.js"
+        ]
     ],
     "404" => [
         "title" => "404 error"
